@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Job Radar</title>
+<meta name="description" content="Private job search dashboard">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: https://i.ytimg.com; font-src 'self'; connect-src 'self' https://api.github.com; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="theme-color" content="#1a1a19">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="app.css">
+<script src="crypto.js" defer></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<noscript>Job Radar needs JavaScript to decrypt your data in the browser.</noscript>
+
+<section id="lock" class="lock" aria-labelledby="lock-title">
+  <form id="lock-form" class="lock-card" autocomplete="off">
+    <svg class="logo" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" stroke-width="3" opacity=".25"/><circle cx="24" cy="24" r="12" fill="none" stroke="currentColor" stroke-width="3" opacity=".5"/><path d="M24 24 L40 12" stroke="#2a78d6" stroke-width="3.5" stroke-linecap="round"/><circle cx="24" cy="24" r="3.5" fill="#2a78d6"/></svg>
+    <h1 id="lock-title">Job Radar</h1>
+    <p>Your jobs are encrypted. Enter your passphrase to unlock them on this device.</p>
+    <label for="pass" class="sr-only">Passphrase</label>
+    <input id="pass" type="password" placeholder="Passphrase" autocomplete="current-password" required autofocus>
+    <button class="btn primary" type="submit" id="unlock-btn">Unlock</button>
+    <div id="lock-error" class="lock-error" role="alert" aria-live="assertive"></div>
+  </form>
+</section>
+
+<div id="app" class="hidden">
+  <header class="top">
+    <div class="top-inner">
+      <div class="brand"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" stroke-width="3" opacity=".25"/><circle cx="24" cy="24" r="12" fill="none" stroke="currentColor" stroke-width="3" opacity=".5"/><path d="M24 24 L40 12" stroke="#2a78d6" stroke-width="3.5" stroke-linecap="round"/><circle cx="24" cy="24" r="3.5" fill="#2a78d6"/></svg>Job Radar</div>
+      <span id="updated" class="updated"></span>
+      <span class="spacer"></span>
+      <span id="sync-pill" class="pill" role="status"></span>
+      <button class="btn small" id="refresh-btn" type="button" title="Fetch the latest data">Refresh</button>
+      <button class="btn small" id="theme-btn" type="button" aria-label="Toggle dark mode">Theme</button>
+      <button class="btn small" id="lock-btn" type="button">Lock</button>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Views">
+      <button role="tab" data-view="today" aria-selected="true">Today</button>
+      <button role="tab" data-view="board" aria-selected="false">Board</button>
+      <button role="tab" data-view="jobs" aria-selected="false">All jobs</button>
+      <button role="tab" data-view="learn" aria-selected="false">Learn</button>
+      <button role="tab" data-view="insights" aria-selected="false">Insights</button>
+      <button role="tab" data-view="settings" aria-selected="false">Settings</button>
+    </nav>
+  </header>
+  <main id="view" tabindex="-1"></main>
+</div>
+
+<div id="drawer-root"></div>
+<div id="print-root" aria-hidden="true"></div>
+<div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+</body>
+</html>

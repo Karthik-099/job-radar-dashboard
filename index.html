@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="jr-build" content="94fb16eda4">
+<title>Job Radar</title>
+<meta name="description" content="Private job search dashboard">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: https://i.ytimg.com https://commons.wikimedia.org https://upload.wikimedia.org https://thumb.wikimedia.org https://bookface-images.s3.amazonaws.com; font-src 'self'; connect-src 'self' https://api.github.com; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="theme-color" content="#f6fbff">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="app.css?v=94fb16eda4">
+<script src="crypto.js?v=94fb16eda4" defer></script>
+<script src="app.js?v=94fb16eda4" defer></script>
+</head>
+<body>
+<noscript>Job Radar needs JavaScript to decrypt your data in the browser.</noscript>
+
+<section id="lock" class="lock" aria-labelledby="lock-title">
+  <div class="lock-art" aria-hidden="true">
+    <div class="lock-brand"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" stroke-width="3" opacity=".35"/><circle cx="24" cy="24" r="12" fill="none" stroke="currentColor" stroke-width="3" opacity=".6"/><path d="M24 24 L40 12" stroke="#38bdf8" stroke-width="3.5" stroke-linecap="round"/><circle cx="24" cy="24" r="3.5" fill="#38bdf8"/></svg>Job Radar</div>
+    <h2 class="lock-headline">Your private <span>job search</span> command centre.</h2>
+    <ul class="lock-points">
+      <li><b>775+</b> company career sites and every major board, scanned every 4 hours</li>
+      <li><b>AI-matched</b> to your resume, with a tailored PDF for each job</li>
+      <li><b>End-to-end encrypted</b>: only your passphrase can open it</li>
+    </ul>
+    <div class="lock-glow"></div>
+  </div>
+  <div class="lock-side">
+    <form id="lock-form" class="lock-card" autocomplete="off">
+      <svg class="logo" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" stroke-width="3" opacity=".25"/><circle cx="24" cy="24" r="12" fill="none" stroke="currentColor" stroke-width="3" opacity=".5"/><path d="M24 24 L40 12" stroke="#ff8a1f" stroke-width="3.5" stroke-linecap="round"/><circle cx="24" cy="24" r="3.5" fill="#ff8a1f"/></svg>
+      <h1 id="lock-title">Welcome back</h1>
+      <p>Enter your passphrase to unlock your dashboard on this device.</p>
+      <label for="pass" class="lock-label">Passphrase</label>
+      <div class="pass-wrap">
+        <input id="pass" type="password" placeholder="5 or more words" autocomplete="current-password" required autofocus>
+        <button type="button" id="pass-toggle" class="pass-toggle" aria-label="Show passphrase" aria-pressed="false">Show</button>
+      </div>
+      <button class="btn primary" type="submit" id="unlock-btn">Unlock dashboard</button>
+      <div id="lock-error" class="lock-error" role="alert" aria-live="assertive"></div>
+      <p class="lock-note"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 11h14v10H5zM8 11V7a4 4 0 0 1 8 0v4"/></svg>AES-256 encrypted. Your passphrase never leaves this browser.</p>
+    </form>
+  </div>
+</section>
+
+<div id="app" class="shell hidden">
+  <aside class="side" aria-label="Navigation">
+    <div class="brand"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" stroke-width="3" opacity=".3"/><circle cx="24" cy="24" r="12" fill="none" stroke="currentColor" stroke-width="3" opacity=".55"/><path d="M24 24 L40 12" stroke="#ff8a1f" stroke-width="3.5" stroke-linecap="round"/><circle cx="24" cy="24" r="3.5" fill="#ff8a1f"/></svg><span>Job Radar</span></div>
+    <nav class="nav" role="tablist" aria-label="Views">
+      <button role="tab" data-view="today" aria-selected="true"><i data-icon="home"></i><span>Today</span></button>
+      <button role="tab" data-view="jobs" aria-selected="false"><i data-icon="list"></i><span>Jobs</span><b class="nav-count" id="count-jobs"></b></button>
+      <button role="tab" data-view="board" aria-selected="false"><i data-icon="board"></i><span>Pipeline</span><b class="nav-count" id="count-pipe"></b></button>
+      <button role="tab" data-view="companies" aria-selected="false"><i data-icon="building"></i><span>Companies</span></button>
+      <button role="tab" data-view="map" aria-selected="false"><i data-icon="globe"></i><span>Map</span></button>
+      <button role="tab" data-view="learn" aria-selected="false"><i data-icon="play"></i><span>Learn</span></button>
+      <button role="tab" data-view="insights" aria-selected="false"><i data-icon="chart"></i><span>Insights</span></button>
+      <button role="tab" data-view="settings" aria-selected="false"><i data-icon="gear"></i><span>Settings</span></button>
+    </nav>
+    <div class="side-foot">
+      <span id="sync-pill" class="pill" role="status"></span>
+      <span id="updated" class="updated"></span>
+    </div>
+  </aside>
+  <div class="main-col">
+    <header class="topbar">
+      <button class="search-trigger" id="palette-btn" type="button" aria-label="Search jobs and commands (Ctrl+K)">
+        <i data-icon="search"></i><span>Search jobs, companies, commands…</span><kbd>Ctrl K</kbd></button>
+      <span class="spacer"></span>
+      <button class="btn ghost small" id="refresh-btn" type="button" title="Fetch the latest data"><i data-icon="refresh"></i><span>Refresh</span></button>
+      <span class="theme-wrap"><button class="btn ghost small icon-only" id="theme-btn" type="button" aria-label="Choose theme" aria-haspopup="menu" title="Theme"><i data-icon="moon"></i></button></span>
+      <button class="btn ghost small" id="lock-btn" type="button"><i data-icon="lock"></i><span>Lock</span></button>
+    </header>
+    <main id="view" tabindex="-1"></main>
+  </div>
+</div>
+
+<div id="drawer-root"></div>
+<div id="modal-root"></div>
+<div id="print-root" aria-hidden="true"></div>
+<div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+</body>
+</html>
